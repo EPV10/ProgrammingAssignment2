@@ -24,7 +24,7 @@ makeCacheMatrix <- function(x = matrix()) {
     getinverse <- function() {                  # Return the cache value
          cache
     }
-    
+
     list(
         set = set,
         get = get,
@@ -41,7 +41,7 @@ cacheSolve <- function(x, ...) {
     cache <- x$getinverse()                         # get the cached value
     if(!is.null(cache)) {                           # if a cached value exists return it
         message("getting cached data")
-        return(i)
+        return(cache)
     }
     m <- x$get()                                   # otherwise get the matrix, caclulate the inverse and store it in the cache
     cache <- solve(m, ...)
@@ -49,3 +49,27 @@ cacheSolve <- function(x, ...) {
     cache
 }
 
+
+ ## TESTING FUNCTIONS
+#>source (cacheMatrix.R)    
+##call makeCacheMatrix without arguments
+#>m <-makeCacheMatrix()
+## create a square matrix 
+#> m$set(matrix(2:5, ncol=2,nrow=2))
+#> m$get()
+#     [,1] [,2]
+#[1,]    2    4
+#[2,]    3    5
+
+#> cacheSolve(m)
+#     [,1] [,2]
+#[1,] -2.5    2
+#[2,]  1.5   -1
+
+## the 2nd time we run the function, we get the cached value
+#> cacheSolve(m)
+#getting cached data
+#     [,1] [,2]
+#[1,] -2.5    2
+#[2,]  1.5   -1
+#> 
